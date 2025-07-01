@@ -136,5 +136,21 @@
       }
     });
   </script>
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const enteredUsername = document.getElementById("username").value.trim();
+    const enteredPin = document.getElementById("password").value.trim();
+
+    const user = JSON.parse(localStorage.getItem("ecetUser"));
+
+    if (!user || enteredUsername !== user.fullName || enteredPin !== user.pin) {
+      document.getElementById("errorText").textContent = "Invalid credentials.";
+    } else {
+      window.location.href = "dashboard.html";
+    }
+  });
+</script>
+
 </body>
 </html>
