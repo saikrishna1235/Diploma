@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Diploma ECET</title>
+  <title>Sign Up - Diploma ECET</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
@@ -16,17 +16,17 @@
       padding: 20px;
     }
 
-    .login-box {
+    .signup-box {
       background: #ffffff;
       padding: 30px 40px;
       border-radius: 14px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
+      max-width: 500px;
       width: 100%;
       animation: fadeIn 0.8s ease-in-out;
     }
 
-    .login-box h2 {
+    .signup-box h2 {
       margin-bottom: 20px;
       color: #2c3e50;
       text-align: center;
@@ -38,23 +38,20 @@
       gap: 15px;
     }
 
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    input, select {
+      padding: 12px 14px;
       font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
       transition: border-color 0.3s;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: #3498db;
-      outline: none;
     }
 
     button {
-      width: 100%;
       padding: 12px;
       background-color: #3498db;
       border: none;
@@ -69,19 +66,13 @@
       background-color: #2980b9;
     }
 
-    .error {
-      color: red;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .signup-link {
+    .login-link {
       text-align: center;
       margin-top: 15px;
       font-size: 14px;
     }
 
-    .signup-link a {
+    .login-link a {
       color: #3498db;
       text-decoration: none;
     }
@@ -97,44 +88,47 @@
       }
     }
 
-    @media (max-width: 480px) {
-      .login-box {
+    @media (max-width: 500px) {
+      .signup-box {
         padding: 25px 20px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Login to Diploma ECET</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-      <div class="error" id="errorText"></div>
-      <div class="signup-link">
-        Don't have an account? <a href="signup.html">Sign up</a>
+  <div class="signup-box">
+    <h2>Create Your Account</h2>
+    <form>
+      <input type="text" placeholder="Full Name" required>
+      
+      <select required>
+        <option value="" disabled selected>Select Branch</option>
+        <option value="CSE">CSE</option>
+        <option value="Mechanical">Mechanical</option>
+        <option value="Electrical">Electrical</option>
+        <option value="Mining">Mining</option>
+        <option value="Civil">Civil</option>
+      </select>
+      
+      <select required>
+        <option value="" disabled selected>Select Semester</option>
+        <option value="1st">1st Semester</option>
+        <option value="2nd">2nd Semester</option>
+        <option value="3rd">3rd Semester</option>
+        <option value="4th">4th Semester</option>
+        <option value="5th">5th Semester</option>
+        <option value="6th">6th Semester</option>
+      </select>
+      
+      <input type="text" placeholder="Phone Number" pattern="[0-9]{10}" required>
+      <input type="password" placeholder="PIN Number" required>
+      
+      <button type="submit">Sign Up</button>
+      
+      <div class="login-link">
+        Already have an account? <a href="login.html">Login</a>
       </div>
     </form>
   </div>
-
-  <script>
-    // Example login validation
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorText = document.getElementById("errorText");
-
-      if (username === "" || password === "") {
-        errorText.textContent = "Please fill in both fields.";
-      } else {
-        // Dummy success (replace with real auth)
-        errorText.textContent = "";
-        alert("Login successful (demo)");
-        // window.location.href = "dashboard.html"; // Redirect if needed
-      }
-    });
-  </script>
 </body>
 </html>
