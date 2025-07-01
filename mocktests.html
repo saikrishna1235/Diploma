@@ -1,83 +1,56 @@
-<!-- Mock Test Module -->
-<section id="mock-tests" style="max-width: 800px; margin: 40px auto; padding: 30px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+<section id="mock-tests" style="max-width: 800px; margin: 40px auto; padding: 30px; background-color: #f0f8ff; border-radius: 10px;">
   <h2 style="text-align: center;">🎯 Diploma Mock Test Module</h2>
 
-  <!-- Test Selection Buttons -->
+  <!-- Step 1: Stream Selection -->
   <div style="text-align: center; margin-bottom: 20px;">
-    <button onclick="loadTest('cse')" style="margin-right: 10px; padding: 10px 20px;">CSE Mock Test</button>
-    <button onclick="loadTest('mpc')" style="padding: 10px 20px;">MPC Mock Test</button>
+    <button onclick="selectStream('cse')">CSE</button>
+    <button onclick="selectStream('mpc')">MPC</button>
   </div>
 
-  <!-- Dynamic Question Area -->
-  <div id="mockTestContent"></div>
+  <!-- Step 2: Subject Selection -->
+  <div id="subjectContainer" style="display: none; text-align: center; margin-bottom: 20px;"></div>
 
-  <button onclick="submitMockTest()" style="margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Submit</button>
+  <!-- Step 3: Test Type Selection -->
+  <div id="testTypeContainer" style="display: none; text-align: center; margin-bottom: 20px;"></div>
 
-  <div id="mockTestResult" style="margin-top: 20px; font-weight: bold; text-align: center;"></div>
+  <!-- Dynamic Quiz Area -->
+  <div id="quizContainer"></div>
 </section>
 
 <script>
-  const cseQuestions = [
-    {
-      question: "Which data structure uses FIFO?",
-      options: ["Stack", "Queue", "Tree", "Graph"],
-      correct: "Queue"
-    },
-    {
-      question: "What does HTML stand for?",
-      options: ["Hyper Text Markup Language", "High Text Machine Language", "Hyperlink Mark Language", "Home Tool Markup Language"],
-      correct: "Hyper Text Markup Language"
-    }
-  ];
+  const subjects = {
+    cse: ['Operating Systems', 'DBMS', 'Computer Networks'],
+    mpc: ['Physics', 'Maths', 'Chemistry']
+  };
 
-  const mpcQuestions = [
-    {
-      question: "What is the derivative of sin(x)?",
-      options: ["cos(x)", "-sin(x)", "-cos(x)", "tan(x)"],
-      correct: "cos(x)"
-    },
-    {
-      question: "What is the unit of force?",
-      options: ["Newton", "Joule", "Watt", "Pascal"],
-      correct: "Newton"
-    }
-  ];
+  function selectStream(stream) {
+    document.getElementById('quizContainer').innerHTML = '';
+    const subjectDiv = document.getElementById('subjectContainer');
+    subjectDiv.innerHTML = `<h3>Select Subject (${stream.toUpperCase()})</h3>` +
+      subjects[stream].map(subject =>
+        `<button onclick="selectSubject('${stream}', '${subject}')">${subject}</button>`
+      ).join(' ');
+    subjectDiv.style.display = 'block';
 
-  let currentTest = [];
-  let currentStream = '';
-
-  function loadTest(stream) {
-    currentStream = stream;
-    currentTest = stream === 'cse' ? cseQuestions : mpcQuestions;
-
-    const contentDiv = document.getElementById('mockTestContent');
-    const questionsHTML = currentTest.map((q, index) => `
-      <div style="margin-bottom: 20px;">
-        <p><strong>Q${index + 1}:</strong> ${q.question}</p>
-        ${q.options.map(opt => `
-          <label><input type="radio" name="q${index}" value="${opt}"> ${opt}</label><br>
-        `).join('')}
-      </div>
-    `).join('');
-
-    contentDiv.innerHTML = questionsHTML;
-    document.getElementById('mockTestResult').innerText = '';
+    document.getElementById('testTypeContainer').style.display = 'none';
   }
 
-  function submitMockTest() {
-    let score = 0;
+  function selectSubject(stream, subject) {
+    const testTypeDiv = document.getElementById('testTypeContainer');
+    testTypeDiv.innerHTML = `<h3>${subject}</h3>
+      <button onclick="loadTest('${stream}', '${subject}', 'lesson')">Lesson-wise Test</button>
+      <button onclick="loadTest('${stream}', '${subject}', 'subject')">Full Subject Test</button>
+      <button onclick="loadTest('${stream}', '${subject}', 'core')">Core ${stream.toUpperCase()} Test</button>
+    `;
+    testTypeDiv.style.display = 'block';
 
-    currentTest.forEach((q, i) => {
-      const selected = document.querySelector(`input[name="q${i}"]:checked`);
-      if (selected && selected.value === q.correct) {
-        score++;
-      }
-    });
-
-    const total = currentTest.length;
-    document.getElementById('mockTestResult').innerText = `You scored ${score}/${total} in the ${currentStream.toUpperCase()} Mock Test`;
+    document.getElementById('quizContainer').innerHTML = '';
   }
 
-  // Load CSE test by default
-  loadTest('cse');
+  function loadTest(stream, subject, type) {
+    document.getElementById('quizContainer').innerHTML = `
+      <h3>${type === 'lesson' ? 'Lesson-wise' : type === 'subject' ? 'Full Subject' : 'Core'} Test: ${subject}</h3>
+      <p>[🔧 Quiz questions will load here... You can now add logic to load specific test questions.]</p>
+    `;
+  }
 </script>
