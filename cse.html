@@ -5,6 +5,15 @@
   <title>CSE Notes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="cse.css">
+  <script>
+  const role = sessionStorage.getItem("userRole");
+  if (!role) {
+    // Not logged in — go to login page
+    sessionStorage.setItem("goAfterLogin", "cse.html");
+    window.location.href = "login.html";
+  }
+</script>
+
 </head>
 <body>
   <header>

@@ -18,18 +18,28 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   if (matchedUser) {
     sessionStorage.setItem("userRole", matchedUser.role);
 
-    const returnPath = sessionStorage.getItem("goAfterLogin");
-    if (returnPath) {
-      window.location.href = returnPath;
-      sessionStorage.removeItem("goAfterLogin");
-    } else {
-      switch (matchedUser.role) {
-        case "admin": window.location.href = "admin-dashboard.html"; break;
-        case "teacher": window.location.href = "teacher-dashboard.html"; break;
-        case "student": window.location.href = "student-dashboard.html"; break;
-      }
+    // Redirect based on role
+    switch (matchedUser.role) {
+      case "admin":
+        window.location.href = "admin-dashboard.html";
+        break;
+      case "teacher":
+        window.location.href = "teacher-dashboard.html";
+        break;
+      case "student":
+        window.location.href = "student-dashboard.html";
+        break;
     }
   } else {
-    errorText.textContent = "❌ Invalid username or password!";
+    alert("Invalid username or password!");
   }
+  const returnPath = sessionStorage.getItem("goAfterLogin");
+if (returnPath) {
+  window.location.href = returnPath;
+  sessionStorage.removeItem("goAfterLogin");
+} else {
+  // default: redirect by role
+}
+
+
 });
