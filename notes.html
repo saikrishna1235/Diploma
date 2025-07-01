@@ -1,44 +1,75 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>ECET Notes</title>
+  <title>Subject Notes</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .accordion {
+      background-color: #eee;
+      cursor: pointer;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      transition: 0.3s;
+      margin-top: 5px;
+    }
+
+    .accordion:hover {
+      background-color: #ccc;
+    }
+
+    .panel {
+      padding: 0 15px;
+      display: none;
+      background-color: #f9f9f9;
+      overflow: hidden;
+      border-left: 2px solid #aaa;
+    }
+
+    .note-link {
+      margin: 5px 0;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>ECET Notes</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="notes.html">Notes</a>
-    </nav>
-  </header>
 
-  <main>
-    <section>
-      <h2>Maths Notes</h2>
-      <ul>
-        <li><a href="#">Integration Shortcuts</a></li>
-        <li><a href="#">Trigonometry Formulas</a></li>
-      </ul>
+<h2>📚 Subject Notes</h2>
 
-      <h2>Physics Notes</h2>
-      <ul>
-        <li><a href="#">Kinematics Basics</a></li>
-        <li><a href="#">Laws of Motion</a></li>
-      </ul>
+<button class="accordion">📐 Maths Notes</button>
+<div class="panel">
+  <a class="note-link" href="#">Integration Tricks</a>
+  <a class="note-link" href="#">Trigonometry Formulae</a>
+  <a class="note-link" href="#">Limits & Continuity</a>
+</div>
 
-      <h2>Chemistry Notes</h2>
-      <ul>
-        <li><a href="#">Organic Reactions</a></li>
-        <li><a href="#">Acids and Bases</a></li>
-      </ul>
-    </section>
-  </main>
+<button class="accordion">⚡ Physics Notes</button>
+<div class="panel">
+  <a class="note-link" href="#">Kinematics Summary</a>
+  <a class="note-link" href="#">Laws of Motion</a>
+  <a class="note-link" href="#">Work, Power & Energy</a>
+</div>
 
-  <footer>
-    <p>&copy; 2025 DiplomaSite. All rights reserved.</p>
-  </footer>
+<button class="accordion">🧪 Chemistry Notes</button>
+<div class="panel">
+  <a class="note-link" href="#">Atomic Structure</a>
+  <a class="note-link" href="#">Periodic Table</a>
+  <a class="note-link" href="#">Organic Reactions</a>
+</div>
+
+<script>
+  const acc = document.getElementsByClassName("accordion");
+  for (let i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+  }
+</script>
+
 </body>
 </html>
