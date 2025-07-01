@@ -1,74 +1,83 @@
-<section id="daily-quiz" style="max-width: 700px; margin: 50px auto; padding: 30px; background-color: #eef7ff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-  <h2 style="text-align: center;">📘 SCE Daily Quiz</h2>
-  <p style="text-align: center; font-style: italic;">Test your knowledge with real past paper questions!</p>
+<!-- Mock Test Module -->
+<section id="mock-tests" style="max-width: 800px; margin: 40px auto; padding: 30px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <h2 style="text-align: center;">🎯 Diploma Mock Test Module</h2>
 
-  <div id="quizContent">
-    <!-- Question will be injected here by JavaScript -->
+  <!-- Test Selection Buttons -->
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button onclick="loadTest('cse')" style="margin-right: 10px; padding: 10px 20px;">CSE Mock Test</button>
+    <button onclick="loadTest('mpc')" style="padding: 10px 20px;">MPC Mock Test</button>
   </div>
 
-  <button onclick="checkAnswer()" style="margin-top: 20px; padding: 10px 20px; background-color: #0066cc; color: white; border: none; border-radius: 5px;">Check Answer</button>
+  <!-- Dynamic Question Area -->
+  <div id="mockTestContent"></div>
 
-  <div id="quizResult" style="margin-top: 20px; font-weight: bold; text-align: center;"></div>
+  <button onclick="submitMockTest()" style="margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Submit</button>
+
+  <div id="mockTestResult" style="margin-top: 20px; font-weight: bold; text-align: center;"></div>
 </section>
 
 <script>
-  // Mock previous paper questions (you can expand this list!)
-  const quizData = [
+  const cseQuestions = [
     {
-      question: "What is the unit of electrical resistance?",
-      options: ["Watt", "Ampere", "Ohm", "Volt"],
-      correct: "Ohm"
+      question: "Which data structure uses FIFO?",
+      options: ["Stack", "Queue", "Tree", "Graph"],
+      correct: "Queue"
     },
     {
-      question: "Which gate outputs 1 only when inputs are different?",
-      options: ["AND", "NAND", "XOR", "OR"],
-      correct: "XOR"
-    },
-    {
-      question: "Which material is a good conductor of electricity?",
-      options: ["Wood", "Glass", "Copper", "Rubber"],
-      correct: "Copper"
-    },
-    {
-      question: "What does CPU stand for?",
-      options: ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Central Processor Universal"],
-      correct: "Central Processing Unit"
+      question: "What does HTML stand for?",
+      options: ["Hyper Text Markup Language", "High Text Machine Language", "Hyperlink Mark Language", "Home Tool Markup Language"],
+      correct: "Hyper Text Markup Language"
     }
   ];
 
-  // Use day of year to select question
-  const today = new Date();
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
-  const questionIndex = dayOfYear % quizData.length;
-  const todayQuiz = quizData[questionIndex];
+  const mpcQuestions = [
+    {
+      question: "What is the derivative of sin(x)?",
+      options: ["cos(x)", "-sin(x)", "-cos(x)", "tan(x)"],
+      correct: "cos(x)"
+    },
+    {
+      question: "What is the unit of force?",
+      options: ["Newton", "Joule", "Watt", "Pascal"],
+      correct: "Newton"
+    }
+  ];
 
-  // Render question and options
-  const quizContainer = document.getElementById('quizContent');
-  quizContainer.innerHTML = `
-    <p><strong>Q:</strong> ${todayQuiz.question}</p>
-    ${todayQuiz.options.map(opt => `
-      <div>
-        <input type="radio" name="dailyQuiz" value="${opt}"> ${opt}
+  let currentTest = [];
+  let currentStream = '';
+
+  function loadTest(stream) {
+    currentStream = stream;
+    currentTest = stream === 'cse' ? cseQuestions : mpcQuestions;
+
+    const contentDiv = document.getElementById('mockTestContent');
+    const questionsHTML = currentTest.map((q, index) => `
+      <div style="margin-bottom: 20px;">
+        <p><strong>Q${index + 1}:</strong> ${q.question}</p>
+        ${q.options.map(opt => `
+          <label><input type="radio" name="q${index}" value="${opt}"> ${opt}</label><br>
+        `).join('')}
       </div>
-    `).join('')}
-  `;
+    `).join('');
 
-  function checkAnswer() {
-    const selected = document.querySelector('input[name="dailyQuiz"]:checked');
-    const resultDiv = document.getElementById('quizResult');
-
-    if (!selected) {
-      resultDiv.innerText = "Please select an answer.";
-      resultDiv.style.color = "red";
-      return;
-    }
-
-    if (selected.value === todayQuiz.correct) {
-      resultDiv.innerText = "✅ Correct!";
-      resultDiv.style.color = "green";
-    } else {
-      resultDiv.innerText = `❌ Incorrect. The correct answer is: ${todayQuiz.correct}`;
-      resultDiv.style.color = "red";
-    }
+    contentDiv.innerHTML = questionsHTML;
+    document.getElementById('mockTestResult').innerText = '';
   }
+
+  function submitMockTest() {
+    let score = 0;
+
+    currentTest.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === q.correct) {
+        score++;
+      }
+    });
+
+    const total = currentTest.length;
+    document.getElementById('mockTestResult').innerText = `You scored ${score}/${total} in the ${currentStream.toUpperCase()} Mock Test`;
+  }
+
+  // Load CSE test by default
+  loadTest('cse');
 </script>
