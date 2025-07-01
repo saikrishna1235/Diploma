@@ -34,4 +34,13 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   } else {
     alert("Invalid username or password!");
   }
+  const returnPath = sessionStorage.getItem("goAfterLogin");
+if (returnPath) {
+  window.location.href = returnPath;
+  sessionStorage.removeItem("goAfterLogin");
+} else {
+  // default: redirect by role
+}
+
+
 });

@@ -34,6 +34,15 @@
       display: block;
     }
   </style>
+  <script>
+  // Check login status
+  const role = sessionStorage.getItem("userRole");
+  if (!role) {
+    // Not logged in, redirect to login
+    window.location.href = "login.html";
+  }
+</script>
+
 </head>
 <body>
 
