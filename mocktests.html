@@ -1,56 +1,189 @@
-<section id="mock-tests" style="max-width: 800px; margin: 40px auto; padding: 30px; background-color: #f0f8ff; border-radius: 10px;">
-  <h2 style="text-align: center;">🎯 Diploma Mock Test Module</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎯 Diploma Mock Test Module</title>
+  <style>
+    /* Base styles and background animation */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0ea5e9, #1e40af);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
 
-  <!-- Step 1: Stream Selection -->
-  <div style="text-align: center; margin-bottom: 20px;">
-    <button onclick="selectStream('cse')">CSE</button>
-    <button onclick="selectStream('mpc')">MPC</button>
-  </div>
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-  <!-- Step 2: Subject Selection -->
-  <div id="subjectContainer" style="display: none; text-align: center; margin-bottom: 20px;"></div>
+    /* Frosted glass container */
+    #mock-tests {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 50px 30px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease;
+    }
 
-  <!-- Step 3: Test Type Selection -->
-  <div id="testTypeContainer" style="display: none; text-align: center; margin-bottom: 20px;"></div>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  <!-- Dynamic Quiz Area -->
-  <div id="quizContainer"></div>
-</section>
+    h2 {
+      text-align: center;
+      font-size: 36px;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
 
-<script>
-  const subjects = {
-    cse: ['Operating Systems', 'DBMS', 'Computer Networks'],
-    mpc: ['Physics', 'Maths', 'Chemistry']
-  };
+    h3 {
+      color: #f8fafc;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
 
-  function selectStream(stream) {
-    document.getElementById('quizContainer').innerHTML = '';
-    const subjectDiv = document.getElementById('subjectContainer');
-    subjectDiv.innerHTML = `<h3>Select Subject (${stream.toUpperCase()})</h3>` +
-      subjects[stream].map(subject =>
-        `<button onclick="selectSubject('${stream}', '${subject}')">${subject}</button>`
-      ).join(' ');
-    subjectDiv.style.display = 'block';
+    .button-container,
+    #subjectContainer,
+    #testTypeContainer {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-    document.getElementById('testTypeContainer').style.display = 'none';
-  }
+    button {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 14px 26px;
+      margin: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 16px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-  function selectSubject(stream, subject) {
-    const testTypeDiv = document.getElementById('testTypeContainer');
-    testTypeDiv.innerHTML = `<h3>${subject}</h3>
-      <button onclick="loadTest('${stream}', '${subject}', 'lesson')">Lesson-wise Test</button>
-      <button onclick="loadTest('${stream}', '${subject}', 'subject')">Full Subject Test</button>
-      <button onclick="loadTest('${stream}', '${subject}', 'core')">Core ${stream.toUpperCase()} Test</button>
-    `;
-    testTypeDiv.style.display = 'block';
+    button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+      transform: skewX(-20deg);
+      transition: left 0.75s ease;
+    }
 
-    document.getElementById('quizContainer').innerHTML = '';
-  }
+    button:hover::after {
+      left: 125%;
+    }
 
-  function loadTest(stream, subject, type) {
-    document.getElementById('quizContainer').innerHTML = `
-      <h3>${type === 'lesson' ? 'Lesson-wise' : type === 'subject' ? 'Full Subject' : 'Core'} Test: ${subject}</h3>
-      <p>[🔧 Quiz questions will load here... You can now add logic to load specific test questions.]</p>
-    `;
-  }
-</script>
+    button:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    #quizContainer {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 30px;
+      margin-top: 30px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+    }
+
+    p {
+      font-size: 16px;
+      color: #e2e8f0;
+    }
+
+    /* Mobile responsive */
+    @media screen and (max-width: 600px) {
+      button {
+        width: 90%;
+        margin: 10px auto;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section id="mock-tests">
+    <h2>🎯 Diploma Mock Test Module</h2>
+
+    <!-- Step 1: Stream Selection -->
+    <div class="button-container">
+      <button onclick="selectStream('cse')">💻 CSE</button>
+      <button onclick="selectStream('mpc')">📘 MPC</button>
+    </div>
+
+    <!-- Step 2: Subject Selection -->
+    <div id="subjectContainer" style="display: none;"></div>
+
+    <!-- Step 3: Test Type Selection -->
+    <div id="testTypeContainer" style="display: none;"></div>
+
+    <!-- Dynamic Quiz Area -->
+    <div id="quizContainer"></div>
+  </section>
+
+  <script>
+    const subjects = {
+      cse: ['🖥️ Operating Systems', '🗄️ DBMS', '🌐 Computer Networks'],
+      mpc: ['🔬 Physics', '📐 Maths', '⚗️ Chemistry']
+    };
+
+    function selectStream(stream) {
+      document.getElementById('quizContainer').innerHTML = '';
+      const subjectDiv = document.getElementById('subjectContainer');
+      subjectDiv.innerHTML = `<h3>Select Subject (${stream.toUpperCase()})</h3>` +
+        subjects[stream].map(subject =>
+          `<button onclick="selectSubject('${stream}', '${subject}')">${subject}</button>`
+        ).join('');
+      subjectDiv.style.display = 'block';
+      document.getElementById('testTypeContainer').style.display = 'none';
+    }
+
+    function selectSubject(stream, subject) {
+      const testTypeDiv = document.getElementById('testTypeContainer');
+      testTypeDiv.innerHTML = `<h3>${subject}</h3>
+        <button onclick="loadTest('${stream}', '${subject}', 'lesson')">🧩 Lesson-wise Test</button>
+        <button onclick="loadTest('${stream}', '${subject}', 'subject')">📚 Full Subject Test</button>
+        <button onclick="loadTest('${stream}', '${subject}', 'core')">🎓 Core ${stream.toUpperCase()} Test</button>`;
+      testTypeDiv.style.display = 'block';
+      document.getElementById('quizContainer').innerHTML = '';
+    }
+
+    function loadTest(stream, subject, type) {
+      document.getElementById('quizContainer').innerHTML = `
+        <h3>${type === 'lesson' ? '🧩 Lesson-wise' : type === 'subject' ? '📚 Full Subject' : '🎓 Core'} Test: ${subject}</h3>
+        <p>✨ [Test questions will appear here soon. Get ready to test your skills!]</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
